@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComptaAI ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1220;--bg2:#0d1929;--bg3:#080f1a;--bg4:#0f1e30;
+  --bord:#1e2d3d;--bord2:#131f2e;
+  --txt:#cbd5e0;--txt2:#94a3b8;--txt3:#64748b;
+  --blue:#0ea5e9;--blue2:#38bdf8;
+  --green:#10b981;--red:#ef4444;--orange:#f59e0b;--purple:#8b5cf6;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bord);border-radius:3px}
+header{background:var(--bg2);border-bottom:1px solid var(--bord);position:sticky;top:0;z-index:100}
+.nav{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 28px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-ico{width:38px;height:38px;background:linear-gradient(135deg,#0ea5e9,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.logo-sub{font-size:10px;color:var(--txt3);letter-spacing:1.5px}
+.bdg{display:inline-flex;align-items:center;background:rgba(14,165,233,.12);color:var(--blue);border:1px solid rgba(14,165,233,.3);border-radius:5px;padding:2px 9px;font-size:10px;font-weight:700}
+.bdg.g{background:rgba(16,185,129,.12);color:var(--green);border-color:rgba(16,185,129,.3)}
+.bdg.o{background:rgba(245,158,11,.12);color:var(--orange);border-color:rgba(245,158,11,.3)}
+.bdg.p{background:rgba(139,92,246,.12);color:var(--purple);border-color:rgba(139,92,246,.3)}
+.bdg.r{background:rgba(239,68,68,.12);color:var(--red);border-color:rgba(239,68,68,.3)}
+.tabs-bar{background:var(--bg2);border-bottom:1px solid var(--bord);padding:0 28px}
+.tabs-inner{max-width:1400px;margin:0 auto;display:flex}
+.tab{background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--txt3);padding:15px 20px;border-bottom:2px solid transparent;transition:all .2s}
+.tab.on{color:var(--blue2);border-bottom-color:var(--blue2)}
+.tab:hover{color:var(--txt2)}
+main{max-width:1400px;margin:0 auto;padding:26px 28px}
+.panel{display:none}
+.panel.on{display:block}
+.card{background:var(--bg2);border:1px solid var(--bord);border-radius:10px;overflow:hidden;margin-bottom:0}
+.chead{padding:14px 22px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between}
+.ctitle{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:2px}
+.cbody{padding:22px}
+.inp{background:var(--bg3);border:1px solid var(--bord);color:#e2e8f0;border-radius:7px;padding:9px 12px;font-size:13px;font-family:'Inter',sans-serif;outline:none;width:100%;transition:border .15s}
+.inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(14,165,233,.15)}
+.lbl{font-size:11px;color:var(--txt3);font-weight:600;display:block;margin-bottom:5px}
+.btn{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-sm{padding:6px 14px;font-size:11px}
+.btn-g{background:transparent;color:var(--txt3);border:1px solid var(--bord);padding:9px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.btn-g:hover{border-color:var(--blue);color:var(--blue2)}
+.btn-d{background:transparent;color:#f87171;border:1px solid rgba(248,113,113,.2);padding:6px 11px;border-radius:7px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-type{flex:1;padding:13px 16px;border-radius:9px;border:2px solid var(--bord);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;text-align:left;transition:all .2s;min-width:120px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 14px;font-size:10px;color:var(--txt3);letter-spacing:1.5px;font-weight:700;border-bottom:1px solid var(--bord);background:var(--bg3);text-align:left}
+tbody tr{border-bottom:1px solid var(--bord2)}
+tbody tr:hover td{background:#0f1e30}
+tbody td{padding:10px 14px;font-size:13px;color:var(--txt)}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:8px 22px;border-top:1px solid var(--bord2)}
+.rr.ind{padding-left:36px}
+.rr .rl{font-size:12px;color:var(--txt2)}
+.rr.ind .rl{color:var(--txt3)}
+.rr .rv{font-size:12px;font-weight:700;font-family:monospace;color:#e2e8f0}
+.rr.ind .rv{color:#f87171}
+.rr.hl{background:rgba(14,165,233,.06);padding-top:11px;padding-bottom:11px}
+.rr.hl .rl{font-weight:700}
+.rr.hl .rv{color:var(--blue2)}
+.rtot{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;background:linear-gradient(135deg,#0ea5e9,#0284c7)}
+.rtot .rl{font-size:13px;font-weight:700;color:#fff}
+.rtot .rv{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#fff}
+.kpi .kv{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800}
+.kpi .kl{font-size:10px;color:var(--txt3);font-weight:700;letter-spacing:1.5px;margin-bottom:8px}
+.chat-box{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+.msg-u{max-width:88%;padding:12px 16px;background:#1a2d45;border:1px solid #2d4a6e;border-radius:18px 18px 5px 18px;font-size:13px;line-height:1.8;color:#e2e8f0;align-self:flex-end}
+.msg-a{max-width:90%;padding:13px 16px;background:#0d1520;border:1px solid #1a3040;border-radius:5px 18px 18px 18px;font-size:13px;line-height:1.8;color:var(--txt);align-self:flex-start}
+.msg-a h2{font-size:17px;font-weight:800;color:#fff;margin:14px 0 7px;padding-bottom:6px;border-bottom:1px solid #2d3e50}
+.msg-a h3{font-size:15px;font-weight:700;color:var(--blue2);margin:12px 0 5px}
+.msg-a h4{font-size:13px;font-weight:700;color:var(--txt2);margin:10px 0 4px}
+.msg-a ul{padding-left:20px;margin:5px 0}
+.msg-a li{margin-bottom:3px}
+.msg-a pre{background:#0b1220;border:1px solid var(--bord);border-radius:6px;padding:13px;overflow-x:auto;margin:8px 0;font-size:12px;font-family:monospace;line-height:1.7}
+.msg-a code{background:#1a2535;border:1px solid #2d3e50;border-radius:3px;padding:1px 6px;font-size:12px;color:#63b3ed;font-family:monospace}
+.msg-a strong{color:#fff;font-weight:700}
+.msg-a blockquote{border-left:3px solid var(--blue2);padding-left:12px;margin:6px 0;color:var(--txt3);font-style:italic}
+.msg-a table{font-size:12px;margin:8px 0}
+.msg-a table th{background:#1a2535;padding:7px 10px;color:var(--blue2);font-size:10px;text-align:left}
+.msg-a table td{padding:7px 10px;border-bottom:1px solid var(--bord2)}
+.ai-ava{width:22px;height:22px;background:linear-gradient(135deg,#0ea5e9,#7c3aed);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:4px;background:var(--blue);display:inline-block;animation:bl 1.4s infinite}
+.dot:nth-child(2){animation-delay:.16s}
+.dot:nth-child(3){animation-delay:.32s}
+@keyframes bl{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.cin{padding:14px 18px;border-top:1px solid var(--bord);background:var(--bg3)}
+.qbtn{display:block;width:100%;margin-bottom:8px;background:var(--bg3);border:1px solid var(--bord);border-radius:8px;padding:9px 12px;text-align:left;cursor:pointer;font-family:'Inter',sans-serif;transition:border .15s}
+.qbtn:hover{border-color:var(--blue)}
+.qbtn .qc{font-size:9px;color:var(--blue);letter-spacing:1.5px;font-weight:700;margin-bottom:2px}
+.qbtn .qt{font-size:12px;color:var(--txt2)}
+.pcg-sug{display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap}
+@media(max-width:900px){
+  .lay-f,.lay-ai{grid-template-columns:1fr!important}
+  .g4{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">
+      <div class="logo-ico">&#9889;</div>
+      <div>
+        <div class="logo-name">ComptaAI ERP</div>
+        <div class="logo-sub">GESTION &middot; COMPTABILIT&Eacute; &middot; INTELLIGENCE</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="bdg">PCG 2024</span>
+      <span class="bdg g">Anti-Fraude TVA</span>
+      <span class="bdg p">IA Hybride</span>
+      <span class="bdg o">v2.1</span>
+    </div>
+  </div>
+</header>
+
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab on" id="tab-facture">&#128196; Facturation</button>
+    <button class="tab" id="tab-journal">&#128218; Journal</button>
+    <button class="tab" id="tab-pcg">&#128193; Mapping PCG</button>
+    <button class="tab" id="tab-ai">&#129302; Assistant IA</button>
+  </div>
+</div>
+
+<main>
+
+<!-- FACTURATION -->
+<div id="panel-facture" class="panel on">
+  <div class="lay-f" style="display:grid;grid-template-columns:1fr 340px;gap:22px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+
+      <div class="card">
+        <div class="chead"><span class="ctitle">TYPE DE PI&Egrave;CE</span></div>
+        <div class="cbody" style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-type" id="bt-vente" style="border-color:var(--blue);background:rgba(14,165,233,.08)">
+            <div style="font-size:20px;margin-bottom:4px">&#129118;</div>
+            <div style="font-size:13px;font-weight:700;color:var(--blue2)">Vente</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:2px">Facture Client (411)</div>
+          </button>
+          <button class="btn-type" id="bt-achat">
+            <div style="font-size:20px;margin-bottom:4px">&#128722;</div>
+            <div style="font-size:13px;font-weight:700;color:var(--txt2)" id="bt-achat-lbl">Achat</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:2px">Facture Fournisseur (401)</div>
+          </button>
+          <button class="btn-type" id="bt-doit" style="border-color:var(--blue);background:rgba(14,165,233,.08)">
+            <div style="font-size:20px;margin-bottom:4px">&#128200;</div>
+            <div style="font-size:13px;font-weight:700;color:var(--blue2)">Doit</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:2px">Facture normale</div>
+          </button>
+          <button class="btn-type" id="bt-avoir">
+            <div style="font-size:20px;margin-bottom:4px">&#128201;</div>
+            <div style="font-size:13px;font-weight:700;color:var(--txt2)">Avoir</div>
+            <div style="font-size:11px;color:var(--txt3);margin-top:2px">Retour / Ristourne</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chead"><span class="ctitle" id="tiers-lbl">CLIENT</span></div>
+        <div class="cbody g2">
+          <div><label class="lbl">RAISON SOCIALE *</label><input class="inp" id="f-tiers" placeholder="Ex: SARL Dupont &amp; Fils"></div>
+          <div><label class="lbl">ADRESSE / SIRET</label><input class="inp" id="f-adr" placeholder="15 rue de la Paix, 75001 Paris"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chead">
+          <span class="ctitle">LIGNES DE FACTURE</span>
+          <button class="btn-g" id="btn-addline">+ Ajouter une ligne</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th style="width:38%">ARTICLE / D&Eacute;SIGNATION</th>
+              <th style="width:8%;text-align:center">QT&Eacute;</th>
+              <th style="width:9%;text-align:center">TVA</th>
+              <th style="width:15%;text-align:right">PU HT</th>
+              <th style="width:16%;text-align:right">MONTANT HT</th>
+              <th style="text-align:center;width:80px">PCG</th>
+              <th style="width:40px"></th>
+            </tr></thead>
+            <tbody id="lines-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chead"><span class="ctitle">CONDITIONS COMMERCIALES &amp; FINANCI&Egrave;RES</span></div>
+        <div class="cbody g3">
+          <div>
+            <label class="lbl">REMISE COMMERCIALE (%)</label>
+            <input class="inp" type="number" id="f-remise" value="0" min="0" max="100" step="0.1">
+            <div style="font-size:11px;color:var(--txt3);margin-top:5px">&#8594; Net Commercial HT</div>
+          </div>
+          <div>
+            <label class="lbl">ESCOMPTE FINANCIER (%)</label>
+            <input class="inp" type="number" id="f-escompte" value="0" min="0" max="100" step="0.1">
+            <div style="font-size:11px;color:var(--txt3);margin-top:5px">&#8594; Net Financier HT</div>
+          </div>
+          <div>
+            <label class="lbl">TAXES ANNEXES (&euro;)</label>
+            <input class="inp" type="number" id="f-taxes" value="0" min="0" step="0.01">
+            <div style="font-size:11px;color:var(--txt3);margin-top:5px">Eco-participation, etc.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROITE -->
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="card">
+        <div class="chead"><span class="ctitle">R&Eacute;F&Eacute;RENCE</span><span style="font-size:10px;color:var(--orange)">&#128274; INALT&Eacute;RABLE</span></div>
+        <div class="cbody">
+          <div id="ref-num" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--blue2);letter-spacing:1px;margin-bottom:10px">---</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
+            <span class="bdg g" id="b-type">Vente</span>
+            <span class="bdg" id="b-kind">Doit</span>
+            <span class="bdg p" id="b-date"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chead"><span class="ctitle">R&Eacute;CAPITULATIF CALCUL</span></div>
+        <div>
+          <div class="rr"><span class="rl">Montant Brut HT</span><span class="rv" id="r-brut">0,00 &euro;</span></div>
+          <div class="rr ind"><span class="rl" id="r-rem-lbl">(-) Remise 0 %</span><span class="rv" id="r-remise">- 0,00 &euro;</span></div>
+          <div class="rr hl"><span class="rl" style="font-weight:700">= Net Commercial HT</span><span class="rv" id="r-netcom">0,00 &euro;</span></div>
+          <div class="rr ind"><span class="rl" id="r-esc-lbl">(-) Escompte 0 %</span><span class="rv" id="r-escompte">- 0,00 &euro;</span></div>
+          <div class="rr hl"><span class="rl" style="font-weight:700">= Net Financier HT</span><span class="rv" id="r-netfin">0,00 &euro;</span></div>
+          <div class="rr"><span class="rl">(+) Taxes annexes</span><span class="rv" id="r-taxes">0,00 &euro;</span></div>
+          <div id="r-tva-rows"></div>
+          <div class="rr" style="border-top:1px solid var(--bord)"><span class="rl" style="font-weight:700;color:var(--green)">Total TVA</span><span class="rv" style="color:var(--green)" id="r-tva">0,00 &euro;</span></div>
+        </div>
+        <div class="rtot"><span class="rl">NET &Agrave; PAYER TTC</span><span class="rv" id="r-net">0,00 &euro;</span></div>
+      </div>
+
+      <button class="btn" id="btn-validate" style="width:100%;padding:13px;font-size:14px">&#128274; Valider &amp; G&eacute;n&eacute;rer Journal</button>
+      <button class="btn-g" id="btn-reset" style="width:100%">R&eacute;initialiser</button>
+    </div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div id="panel-journal" class="panel">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div class="g4">
+      <div class="card kpi"><div class="cbody"><div class="kl">FACTURES VALID&Eacute;ES</div><div class="kv" style="color:var(--blue2)" id="kpi-fac">0</div></div></div>
+      <div class="card kpi"><div class="cbody"><div class="kl">&Eacute;CRITURES JOURNAL</div><div class="kv" style="color:var(--green)" id="kpi-ecr">0</div></div></div>
+      <div class="card kpi"><div class="cbody"><div class="kl">TOTAL VENTES HT</div><div class="kv" style="color:var(--green)" id="kpi-vte">0,00 &euro;</div></div></div>
+      <div class="card kpi"><div class="cbody"><div class="kl">TOTAL ACHATS HT</div><div class="kv" style="color:var(--red)" id="kpi-ach">0,00 &euro;</div></div></div>
+    </div>
+    <div class="card">
+      <div class="chead">
+        <span class="ctitle" id="j-count">JOURNAL G&Eacute;N&Eacute;RAL &mdash; 0 &Eacute;CRITURES</span>
+        <button class="btn btn-sm" id="btn-exp-j" style="display:none">&#128229; Exporter PDF</button>
+      </div>
+      <div id="j-empty" style="padding:56px 0;text-align:center;color:var(--txt3)">
+        <div style="font-size:44px;margin-bottom:12px">&#128218;</div>
+        <div style="font-size:14px;font-weight:600;color:var(--txt2);margin-bottom:6px">Aucune &eacute;criture</div>
+        <div>Validez une facture pour g&eacute;n&eacute;rer les &eacute;critures automatiquement.</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table id="j-table" style="display:none">
+          <thead><tr>
+            <th style="width:100px">DATE</th>
+            <th>LIBELL&Eacute;</th>
+            <th style="width:150px">N&deg; PI&Egrave;CE</th>
+            <th style="text-align:right;width:100px">COMPTE</th>
+            <th style="text-align:right;width:140px">D&Eacute;BIT</th>
+            <th style="text-align:right;width:140px">CR&Eacute;DIT</th>
+          </tr></thead>
+          <tbody id="j-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" id="fac-card" style="display:none">
+      <div class="chead"><span class="ctitle">FACTURES VALID&Eacute;ES &mdash; LOI ANTI-FRAUDE TVA 2018</span></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>N&deg; FACTURE</th><th>TYPE</th><th>NATURE</th><th>TIERS</th><th>DATE</th>
+            <th style="text-align:right">NET HT</th><th style="text-align:right">TVA</th>
+            <th style="text-align:right">NET &Agrave; PAYER</th><th style="text-align:center">PDF</th>
+          </tr></thead>
+          <tbody id="fac-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PCG -->
+<div id="panel-pcg" class="panel">
+  <div class="g2" style="gap:20px;margin-bottom:20px">
+    <div class="card">
+      <div class="chead"><span class="ctitle">TESTEUR MAPPING PCG</span></div>
+      <div class="cbody">
+        <label class="lbl">SAISIR UNE DESCRIPTION</label>
+        <input class="inp" id="pcg-input" placeholder="Ex: Achat fournitures de bureau..." style="margin-bottom:12px">
+        <div id="pcg-result"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chead"><span class="ctitle" id="pcg-count">BASE PCG INT&Eacute;GR&Eacute;E</span></div>
+      <div id="pcg-list" style="max-height:420px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AI -->
+<div id="panel-ai" class="panel">
+  <div class="lay-ai" style="display:grid;grid-template-columns:1fr 285px;gap:20px;align-items:start">
+    <div class="card" style="display:flex;flex-direction:column;height:720px">
+      <div class="chead" style="background:linear-gradient(90deg,var(--bg2),var(--bg4))">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="position:relative">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#0ea5e9,#7c3aed);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:22px">&#129302;</div>
+            <div style="position:absolute;bottom:1px;right:1px;width:11px;height:11px;background:var(--green);border-radius:6px;border:2px solid var(--bg2)"></div>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:#fff;font-size:16px">ComptaAI &mdash; Assistant Universel</div>
+            <div style="font-size:11px;color:var(--blue2)">Comptabilit&eacute; &middot; Droit &middot; Sciences &middot; Actualit&eacute; en temps r&eacute;el</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="bdg">Web Search</span>
+          <span class="bdg p">4K tokens</span>
+          <button class="btn-g" id="btn-clear-chat" style="font-size:11px;padding:5px 12px">Effacer</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box">
+        <div id="chat-welcome" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:24px;text-align:center">
+          <div style="font-size:52px">&#129504;</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#fff">Posez n'importe quelle question</div>
+          <div style="color:var(--txt3);font-size:13px;max-width:420px;line-height:1.8">Comptabilit&eacute;, fiscalit&eacute;, droit, sciences, histoire, actualit&eacute; en direct...</div>
+          <div id="example-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:540px;margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="cin">
+        <div style="display:flex;gap:10px;align-items:flex-end">
+          <textarea class="inp" id="ai-input" rows="2" style="resize:none;line-height:1.6;flex:1" placeholder="Posez n'importe quelle question..."></textarea>
+          <button class="btn" id="send-btn" style="align-self:flex-end;padding:12px 20px">&#8593; Envoyer</button>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:7px;font-size:11px;color:#334155">
+          <span>Entr&eacute;e = Envoyer</span><span>Maj+Entr&eacute;e = nouvelle ligne</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="chead"><span class="ctitle">DOMAINES COUVERTS</span></div>
+        <div id="domain-list"></div>
+      </div>
+      <div class="card">
+        <div class="chead"><span class="ctitle">EXEMPLES RAPIDES</span></div>
+        <div style="padding:14px" id="quick-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===== PCG =====
+var PCG = [
+  {c:"6064",l:"Fournitures de bureau",k:["fournitures bureau","papeterie","stylo","classeur","ramette","tampon"]},
+  {c:"6063",l:"Fournitures entretien",k:["entretien","nettoyage","produit menager","balai","aspirateur"]},
+  {c:"6061",l:"Matieres premieres",k:["matiere premiere","materiaux","composant","acier","bois","plastique"]},
+  {c:"6068",l:"Autres fournitures",k:["fourniture diverse","consommable","accessoire","emballage"]},
+  {c:"607", l:"Achat marchandises",k:["achat marchandise","stock","revente","produit fini","article"]},
+  {c:"626", l:"Frais telecoms Cloud",k:["telephone","internet","cloud","hebergement","serveur","saas","logiciel","fibre","mobile"]},
+  {c:"6227",l:"Frais deplacement",k:["deplacement","transport","train","avion","taxi","uber","carburant","peage","hotel","voyage"]},
+  {c:"6132",l:"Locations immobilieres",k:["loyer","location bureau","bail","immobilier"]},
+  {c:"6135",l:"Locations mobilieres",k:["location vehicule","location materiel","leasing"]},
+  {c:"6151",l:"Entretien reparations",k:["reparation","maintenance","revision","depannage"]},
+  {c:"6226",l:"Honoraires",k:["honoraires","consultant","avocat","expert","notaire","comptable","conseil"]},
+  {c:"625", l:"Frais reception",k:["restaurant","repas","reception","traiteur"]},
+  {c:"6231",l:"Publicite",k:["publicite","marketing","affichage","campagne","annonce"]},
+  {c:"6411",l:"Salaires",k:["salaire","remuneration","traitement","appointement","paie"]},
+  {c:"645", l:"Charges sociales",k:["cotisations sociales","charges patronales","urssaf","retraite"]},
+  {c:"2183",l:"Materiel informatique",k:["ordinateur","laptop","imprimante","ecran","pc","mac"]},
+  {c:"2184",l:"Mobilier",k:["bureau meuble","chaise","armoire","mobilier","table"]},
+  {c:"706", l:"Prestations services",k:["prestation","service","mission","developpement","formation","coaching"]},
+  {c:"707", l:"Ventes marchandises",k:["vente produit","cession","vente marchandise"]},
+  {c:"708", l:"Produits annexes",k:["commission","redevance","licence"]}
+];
+
+function mapPCG(desc) {
+  if (!desc) return null;
+  var lo = desc.toLowerCase();
+  var best = null, bs = 0;
+  for (var i = 0; i < PCG.length; i++) {
+    var r = PCG[i];
+    for (var j = 0; j < r.k.length; j++) {
+      var ws = r.k[j].split(" ");
+      var match = 0;
+      for (var w = 0; w < ws.length; w++) { if (lo.indexOf(ws[w]) >= 0) match++; }
+      var s = match / ws.length;
+      if (s > bs) { bs = s; best = r; }
+    }
+  }
+  return bs > 0 ? best : null;
+}
+
+// ===== UTILS =====
+function fe(n) {
+  var v = isNaN(+n) ? 0 : +n;
+  return v.toFixed(2).replace(".", ",") + "\u00A0\u20AC";
+}
+function today() { return new Date().toLocaleDateString("fr-FR"); }
+function gn(t) {
+  var d = new Date();
+  var r = Math.floor(Math.random() * 9000) + 1000;
+  var m = String(d.getMonth() + 1).padStart(2, "0");
+  return (t === "Achat" ? "ACH" : "VTE") + "-" + d.getFullYear() + m + "-" + r;
+}
+
+var lid = 0;
+var invType = "Vente";
+var invKind = "Doit";
+var validated = [];
+var journalEntries = [];
+
+// ===== TABS =====
+function goTab(name) {
+  var panels = document.querySelectorAll(".panel");
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove("on");
+  var tabs = document.querySelectorAll(".tab");
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove("on");
+  document.getElementById("panel-" + name).classList.add("on");
+  document.getElementById("tab-" + name).classList.add("on");
+}
+
+document.getElementById("tab-facture").addEventListener("click", function() { goTab("facture"); });
+document.getElementById("tab-journal").addEventListener("click", function() { goTab("journal"); });
+document.getElementById("tab-pcg").addEventListener("click", function() { goTab("pcg"); });
+document.getElementById("tab-ai").addEventListener("click", function() { goTab("ai"); });
+
+// ===== TYPE / KIND =====
+function setType(t) {
+  invType = t;
+  var vBtn = document.getElementById("bt-vente");
+  var aBtn = document.getElementById("bt-achat");
+  if (t === "Vente") {
+    vBtn.style.borderColor = "var(--blue)"; vBtn.style.background = "rgba(14,165,233,.08)";
+    vBtn.querySelector("div:nth-child(2)").style.color = "var(--blue2)";
+    aBtn.style.borderColor = "var(--bord)"; aBtn.style.background = "transparent";
+    aBtn.querySelector("div:nth-child(2)").style.color = "var(--txt2)";
+  } else {
+    aBtn.style.borderColor = "var(--blue)"; aBtn.style.background = "rgba(14,165,233,.08)";
+    aBtn.querySelector("div:nth-child(2)").style.color = "var(--blue2)";
+    vBtn.style.borderColor = "var(--bord)"; vBtn.style.background = "transparent";
+    vBtn.querySelector("div:nth-child(2)").style.color = "var(--txt2)";
+  }
+  document.getElementById("tiers-lbl").textContent = t === "Vente" ? "CLIENT" : "FOURNISSEUR";
+  document.getElementById("b-type").textContent = t;
+  document.getElementById("b-type").className = "bdg " + (t === "Vente" ? "g" : "r");
+}
+
+function setKind(k) {
+  invKind = k;
+  var dBtn = document.getElementById("bt-doit");
+  var aBtn = document.getElementById("bt-avoir");
+  if (k === "Doit") {
+    dBtn.style.borderColor = "var(--blue)"; dBtn.style.background = "rgba(14,165,233,.08)";
+    dBtn.querySelector("div:nth-child(2)").style.color = "var(--blue2)";
+    aBtn.style.borderColor = "var(--bord)"; aBtn.style.background = "transparent";
+    aBtn.querySelector("div:nth-child(2)").style.color = "var(--txt2)";
+  } else {
+    aBtn.style.borderColor = "var(--orange)"; aBtn.style.background = "rgba(245,158,11,.08)";
+    aBtn.querySelector("div:nth-child(2)").style.color = "var(--orange)";
+    dBtn.style.borderColor = "var(--bord)"; dBtn.style.background = "transparent";
+    dBtn.querySelector("div:nth-child(2)").style.color = "var(--txt2)";
+  }
+  document.getElementById("b-kind").textContent = k;
+}
+
+document.getElementById("bt-vente").addEventListener("click", function() { setType("Vente"); });
+document.getElementById("bt-achat").addEventListener("click", function() { setType("Achat"); });
+document.getElementById("bt-doit").addEventListener("click", function() { setKind("Doit"); });
+document.getElementById("bt-avoir").addEventListener("click", function() { setKind("Avoir"); });
+
+// ===== LIGNES =====
+function addLine() {
+  lid++;
+  var id = lid;
+  var tbody = document.getElementById("lines-body");
+  var tr = document.createElement("tr");
+  tr.id = "ln-" + id;
+
+  var tdDesc = document.createElement("td");
+  tdDesc.style.cssText = "padding:10px 8px;border-bottom:1px solid var(--bord2)";
+  var inp = document.createElement("input");
+  inp.className = "inp";
+  inp.id = "ld-" + id;
+  inp.placeholder = "Designation de l article ou service...";
+  var sug = document.createElement("div");
+  sug.id = "ps-" + id;
+  sug.className = "pcg-sug";
+  sug.style.display = "none";
+  inp.addEventListener("input", function() { onDesc(id, inp.value); });
+  tdDesc.appendChild(inp);
+  tdDesc.appendChild(sug);
+
+  var tdQty = document.createElement("td");
+  tdQty.style.cssText = "padding:10px 6px;border-bottom:1px solid var(--bord2);text-align:center";
+  var inpQ = document.createElement("input");
+  inpQ.className = "inp";
+  inpQ.id = "lq-" + id;
+  inpQ.type = "number";
+  inpQ.value = "1";
+  inpQ.min = "0";
+  inpQ.step = "0.01";
+  inpQ.style.cssText = "width:65px;text-align:center;padding:9px 6px";
+  inpQ.addEventListener("input", refreshRecap);
+  tdQty.appendChild(inpQ);
+
+  var tdTva = document.createElement("td");
+  tdTva.style.cssText = "padding:10px 6px;border-bottom:1px solid var(--bord2);text-align:center";
+  var sel = document.createElement("select");
+  sel.className = "inp";
+  sel.id = "lt-" + id;
+  sel.style.width = "82px";
+  ["0","2.1","5.5","10","20"].forEach(function(r) {
+    var opt = document.createElement("option");
+    opt.value = r;
+    opt.textContent = r + " %";
+    if (r === "20") opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener("change", refreshRecap);
+  tdTva.appendChild(sel);
+
+  var tdPu = document.createElement("td");
+  tdPu.style.cssText = "padding:10px 6px;border-bottom:1px solid var(--bord2)";
+  var inpP = document.createElement("input");
+  inpP.className = "inp";
+  inpP.id = "lp-" + id;
+  inpP.type = "number";
+  inpP.placeholder = "0,00";
+  inpP.min = "0";
+  inpP.step = "0.01";
+  inpP.style.cssText = "width:110px;text-align:right;display:block;margin-left:auto";
+  inpP.addEventListener("input", refreshRecap);
+  tdPu.appendChild(inpP);
+
+  var tdMt = document.createElement("td");
+  tdMt.id = "lm-" + id;
+  tdMt.style.cssText = "padding:10px 14px;border-bottom:1px solid var(--bord2);text-align:right;font-weight:700;color:var(--blue2);font-family:monospace;white-space:nowrap";
+  tdMt.textContent = "0,00 \u20AC";
+
+  var tdPcg = document.createElement("td");
+  tdPcg.id = "lc-" + id;
+  tdPcg.style.cssText = "padding:10px 8px;border-bottom:1px solid var(--bord2);text-align:center";
+
+  var tdDel = document.createElement("td");
+  tdDel.style.cssText = "padding:10px 6px;border-bottom:1px solid var(--bord2);text-align:center";
+  var btnDel = document.createElement("button");
+  btnDel.className = "btn-d";
+  btnDel.textContent = "\u2715";
+  btnDel.addEventListener("click", function() { rmLine(id); });
+  tdDel.appendChild(btnDel);
+
+  tr.appendChild(tdDesc);
+  tr.appendChild(tdQty);
+  tr.appendChild(tdTva);
+  tr.appendChild(tdPu);
+  tr.appendChild(tdMt);
+  tr.appendChild(tdPcg);
+  tr.appendChild(tdDel);
+  tbody.appendChild(tr);
+  refreshRecap();
+}
+
+function rmLine(id) {
+  var tr = document.getElementById("ln-" + id);
+  if (tr) tr.remove();
+  refreshRecap();
+}
+
+function onDesc(id, v) {
+  var s = mapPCG(v);
+  var el = document.getElementById("ps-" + id);
+  var cl = document.getElementById("lc-" + id);
+  if (s) {
+    el.style.display = "flex";
+    el.innerHTML = '<span style="font-size:10px">&#129504;</span><span class="bdg" style="font-size:9px">' + s.c + '</span><span style="font-size:11px;color:var(--txt3)">' + s.l + '</span>';
+    cl.innerHTML = '<span class="bdg" style="font-size:9px">' + s.c + '</span>';
+  } else {
+    el.style.display = "none";
+    cl.innerHTML = "";
+  }
+}
+
+function getLines() {
+  var rows = [];
+  var inputs = document.querySelectorAll("[id^='ld-']");
+  for (var i = 0; i < inputs.length; i++) {
+    var id = inputs[i].id.replace("ld-", "");
+    var qEl = document.getElementById("lq-" + id);
+    var pEl = document.getElementById("lp-" + id);
+    var tEl = document.getElementById("lt-" + id);
+    rows.push({
+      id: id,
+      desc: inputs[i].value,
+      qty: parseFloat(qEl ? qEl.value : 0) || 0,
+      pu:  parseFloat(pEl ? pEl.value : 0) || 0,
+      tva: parseFloat(tEl ? tEl.value : 20) || 0
+    });
+  }
+  return rows;
+}
+
+// ===== CALCUL =====
+function calcInv(lines, rP, eP, tx) {
+  var brut = 0;
+  for (var i = 0; i < lines.length; i++) brut += lines[i].qty * lines[i].pu;
+  var remise = brut * (rP / 100);
+  var netCom = brut - remise;
+  var esc = netCom * (eP / 100);
+  var netFin = netCom - esc;
+  var taxes = parseFloat(tx) || 0;
+  var tvaBR = {};
+  var tTVA = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var ht = lines[i].qty * lines[i].pu;
+    var htn = brut > 0 ? ht * (netFin / brut) : 0;
+    var r = lines[i].tva;
+    tvaBR[r] = (tvaBR[r] || 0) + htn * (r / 100);
+  }
+  for (var r in tvaBR) tTVA += tvaBR[r];
+  return { brut:brut, remise:remise, netCom:netCom, esc:esc, netFin:netFin, taxes:taxes, tvaBR:tvaBR, tTVA:tTVA, net:netFin+taxes+tTVA };
+}
+
+function refreshRecap() {
+  var lines = getLines();
+  var rP = parseFloat(document.getElementById("f-remise").value) || 0;
+  var eP = parseFloat(document.getElementById("f-escompte").value) || 0;
+  var tx = parseFloat(document.getElementById("f-taxes").value) || 0;
+  var c = calcInv(lines, rP, eP, tx);
+  for (var i = 0; i < lines.length; i++) {
+    var el = document.getElementById("lm-" + lines[i].id);
+    if (el) el.textContent = fe(lines[i].qty * lines[i].pu);
+  }
+  document.getElementById("r-brut").textContent = fe(c.brut);
+  document.getElementById("r-rem-lbl").textContent = "(-) Remise " + rP + " %";
+  document.getElementById("r-remise").textContent = "- " + fe(c.remise);
+  document.getElementById("r-netcom").textContent = fe(c.netCom);
+  document.getElementById("r-esc-lbl").textContent = "(-) Escompte " + eP + " %";
+  document.getElementById("r-escompte").textContent = "- " + fe(c.esc);
+  document.getElementById("r-netfin").textContent = fe(c.netFin);
+  document.getElementById("r-taxes").textContent = fe(c.taxes);
+  document.getElementById("r-tva").textContent = fe(c.tTVA);
+  document.getElementById("r-net").textContent = fe(c.net);
+  var tvaDiv = document.getElementById("r-tva-rows");
+  tvaDiv.innerHTML = "";
+  for (var r in c.tvaBR) {
+    tvaDiv.innerHTML += '<div class="rr"><span class="rl">(+) TVA ' + r + ' %</span><span class="rv">' + fe(c.tvaBR[r]) + '</span></div>';
+  }
+  document.getElementById("ref-num").textContent = gn(invType);
+  document.getElementById("b-date").textContent = today();
+}
+
+document.getElementById("f-remise").addEventListener("input", refreshRecap);
+document.getElementById("f-escompte").addEventListener("input", refreshRecap);
+document.getElementById("f-taxes").addEventListener("input", refreshRecap);
+document.getElementById("btn-addline").addEventListener("click", addLine);
+
+// ===== VALIDATION =====
+function validateInvoice() {
+  var tiers = document.getElementById("f-tiers").value.trim();
+  var lines = getLines().filter(function(l) { return l.desc || l.pu; });
+  if (!tiers) { alert("Veuillez renseigner le tiers."); return; }
+  if (!lines.length) { alert("Ajoutez au moins une ligne."); return; }
+  var rP = parseFloat(document.getElementById("f-remise").value) || 0;
+  var eP = parseFloat(document.getElementById("f-escompte").value) || 0;
+  var tx = parseFloat(document.getElementById("f-taxes").value) || 0;
+  var c = calcInv(lines, rP, eP, tx);
+  var inv = { numero:gn(invType), type:invType, kind:invKind, tiers:tiers, adresse:document.getElementById("f-adr").value, lines:lines, remise:rP, escompte:eP, taxes:tx, calc:c, date:today() };
+  validated.unshift(inv);
+  var newEntries = genJournal(inv, c);
+  for (var i = 0; i < newEntries.length; i++) journalEntries.unshift(newEntries[i]);
+  refreshJournal();
+  resetForm();
+  goTab("journal");
+}
+
+function resetForm() {
+  document.getElementById("f-tiers").value = "";
+  document.getElementById("f-adr").value = "";
+  document.getElementById("f-remise").value = 0;
+  document.getElementById("f-escompte").value = 0;
+  document.getElementById("f-taxes").value = 0;
+  document.getElementById("lines-body").innerHTML = "";
+  lid = 0;
+  refreshRecap();
+}
+
+document.getElementById("btn-validate").addEventListener("click", validateInvoice);
+document.getElementById("btn-reset").addEventListener("click", resetForm);
+
+// ===== JOURNAL =====
+function genJournal(inv, c) {
+  var e = [], d = today(), r = inv.numero;
+  if (inv.type === "Achat") {
+    e.push({d:d,r:r,compte:"401",lib:"Fournisseur - " + inv.tiers,debit:"",credit:fe(c.net)});
+    for (var i = 0; i < inv.lines.length; i++) {
+      var p = mapPCG(inv.lines[i].desc);
+      e.push({d:d,r:r,compte:p ? p.c : "6??",lib:inv.lines[i].desc,debit:fe(inv.lines[i].qty * inv.lines[i].pu),credit:""});
+    }
+    for (var ra in c.tvaBR) e.push({d:d,r:r,compte:"44566",lib:"TVA deductible " + ra + "%",debit:fe(c.tvaBR[ra]),credit:""});
+  } else {
+    e.push({d:d,r:r,compte:"411",lib:"Client - " + inv.tiers,debit:fe(c.net),credit:""});
+    for (var i = 0; i < inv.lines.length; i++) {
+      var p = mapPCG(inv.lines[i].desc);
+      e.push({d:d,r:r,compte:p ? p.c : "7??",lib:inv.lines[i].desc,debit:"",credit:fe(inv.lines[i].qty * inv.lines[i].pu)});
+    }
+    for (var ra in c.tvaBR) e.push({d:d,r:r,compte:"44571",lib:"TVA collectee " + ra + "%",debit:"",credit:fe(c.tvaBR[ra])});
+  }
+  return e;
+}
+
+function refreshJournal() {
+  var vteHT = 0, achHT = 0;
+  for (var i = 0; i < validated.length; i++) {
+    if (validated[i].type === "Vente") vteHT += validated[i].calc.netFin;
+    else achHT += validated[i].calc.netFin;
+  }
+  document.getElementById("kpi-fac").textContent = validated.length;
+  document.getElementById("kpi-ecr").textContent = journalEntries.length;
+  document.getElementById("kpi-vte").textContent = fe(vteHT);
+  document.getElementById("kpi-ach").textContent = fe(achHT);
+  document.getElementById("j-count").textContent = "JOURNAL GENERAL - " + journalEntries.length + " ECRITURES";
+  if (journalEntries.length > 0) {
+    document.getElementById("j-empty").style.display = "none";
+    document.getElementById("j-table").style.display = "table";
+    document.getElementById("btn-exp-j").style.display = "inline-block";
+    var html = "";
+    for (var i = 0; i < journalEntries.length; i++) {
+      var e = journalEntries[i];
+      html += '<tr>';
+      html += '<td style="color:var(--txt3);font-size:12px;white-space:nowrap">' + e.d + '</td>';
+      html += '<td>' + e.lib + '</td>';
+      html += '<td><span class="bdg" style="font-size:9px">' + e.r + '</span></td>';
+      html += '<td style="text-align:right"><span style="font-family:monospace;font-size:14px;font-weight:800;color:var(--blue2)">' + e.compte + '</span></td>';
+      html += '<td style="text-align:right;font-family:monospace;font-size:13px;font-weight:' + (e.debit ? 700 : 400) + ';color:' + (e.debit ? '#60a5fa' : 'var(--bord)') + '">' + (e.debit || '-') + '</td>';
+      html += '<td style="text-align:right;font-family:monospace;font-size:13px;font-weight:' + (e.credit ? 700 : 400) + ';color:' + (e.credit ? 'var(--orange)' : 'var(--bord)') + '">' + (e.credit || '-') + '</td>';
+      html += '</tr>';
+    }
+    document.getElementById("j-body").innerHTML = html;
+  }
+  if (validated.length > 0) {
+    document.getElementById("fac-card").style.display = "block";
+    var html = "";
+    for (var i = 0; i < validated.length; i++) {
+      var v = validated[i];
+      html += '<tr>';
+      html += '<td style="font-family:monospace;font-weight:800;color:var(--blue2);font-size:12px">' + v.numero + '</td>';
+      html += '<td><span class="bdg ' + (v.type === "Vente" ? "g" : "r") + '">' + v.type + '</span></td>';
+      html += '<td><span class="bdg ' + (v.kind === "Avoir" ? "o" : "") + '">' + v.kind + '</span></td>';
+      html += '<td>' + v.tiers + '</td>';
+      html += '<td style="font-size:12px;color:var(--txt3)">' + v.date + '</td>';
+      html += '<td style="text-align:right;font-family:monospace;font-size:12px">' + fe(v.calc.netFin) + '</td>';
+      html += '<td style="text-align:right;font-family:monospace;font-size:12px;color:var(--orange)">' + fe(v.calc.tTVA) + '</td>';
+      html += '<td style="text-align:right;font-family:monospace;font-size:13px;font-weight:700;color:var(--green)">' + fe(v.calc.net) + '</td>';
+      html += '<td style="text-align:center"><button class="btn btn-sm" data-idx="' + i + '">PDF</button></td>';
+      html += '</tr>';
+    }
+    document.getElementById("fac-body").innerHTML = html;
+    var pdfBtns = document.querySelectorAll("#fac-body .btn");
+    for (var i = 0; i < pdfBtns.length; i++) {
+      pdfBtns[i].addEventListener("click", function() { exportInvoicePDF(parseInt(this.getAttribute("data-idx"))); });
+    }
+  }
+}
+
+document.getElementById("btn-exp-j").addEventListener("click", exportJournalPDF);
+
+// ===== PDF =====
+function exportInvoicePDF(idx) {
+  var inv = validated[idx], c = inv.calc;
+  var lines = "";
+  for (var i = 0; i < inv.lines.length; i++) {
+    var l = inv.lines[i];
+    var p = mapPCG(l.desc);
+    lines += '<tr><td>' + (l.desc||"-") + (p ? ' <span style="background:#ebf8ff;color:#2b6cb0;border:1px solid #bee3f8;border-radius:3px;padding:1px 5px;font-size:8pt;font-weight:700">' + p.c + '</span>' : '') + '</td>';
+    lines += '<td style="text-align:center">' + l.qty + '</td>';
+    lines += '<td style="text-align:center">' + l.tva + ' %</td>';
+    lines += '<td style="text-align:right;font-weight:600">' + fe(l.pu) + '</td>';
+    lines += '<td style="text-align:right;font-weight:600">' + fe(l.qty * l.pu) + '</td></tr>';
+  }
+  var tvaRows = "";
+  for (var r in c.tvaBR) tvaRows += '<div style="display:flex;justify-content:space-between;padding:7px 14px;border-top:1px solid #e2e8f0"><span style="color:#4a5568">(+) TVA ' + r + ' %</span><span style="font-weight:700;color:#1a365d">' + fe(c.tvaBR[r]) + '</span></div>';
+  var w = window.open("", "_blank");
+  w.document.write('<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Facture ' + inv.numero + '</title>'
+    + '<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;font-size:10.5pt;color:#1a202c;padding:28px 34px}'
+    + '.hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;padding-bottom:16px;border-bottom:3px solid #1a365d}'
+    + 'table{width:100%;border-collapse:collapse}thead th{background:#1a365d;color:#fff;padding:9px 11px;font-size:9pt;font-weight:700;text-align:left}'
+    + 'thead th.r{text-align:right}tbody tr:nth-child(even){background:#f8fafc}tbody td{padding:8px 11px;font-size:10pt;border-bottom:1px solid #e8ecf0}'
+    + '.fin{background:#1a365d!important;color:#fff;padding:13px 15px;font-size:13pt;font-weight:900}'
+    + '@media print{@page{margin:1.5cm}}</style></head><body>'
+    + '<div class="hdr"><div><div style="font-size:22pt;font-weight:900;color:#1a365d">VOTRE ENTREPRISE</div><div style="font-size:9pt;color:#4a5568;margin-top:4px">123 rue de la Paix, 75001 Paris - SIRET : 123 456 789 00012</div></div>'
+    + '<div style="background:#1a365d;color:#fff;padding:13px 18px;border-radius:8px;text-align:right"><div style="font-size:8pt;letter-spacing:2px;opacity:.7;margin-bottom:3px">' + (inv.type==="Vente"?"FACTURE CLIENT":"FACTURE FOURNISSEUR") + (inv.kind==="Avoir"?" - AVOIR":"") + '</div>'
+    + '<div style="font-size:19pt;font-weight:900">' + inv.numero + '</div><div style="font-size:9.5pt;margin-top:7px">' + inv.date + '</div></div></div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px">'
+    + '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;padding:13px"><div style="font-size:8pt;color:#718096;letter-spacing:2px;font-weight:700;margin-bottom:5px">EMETTEUR</div><div style="font-size:13pt;font-weight:700;color:#1a365d">VOTRE ENTREPRISE SAS</div></div>'
+    + '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;padding:13px"><div style="font-size:8pt;color:#718096;letter-spacing:2px;font-weight:700;margin-bottom:5px">' + (inv.type==="Vente"?"CLIENT":"FOURNISSEUR") + '</div><div style="font-size:13pt;font-weight:700;color:#1a365d">' + (inv.tiers||"-") + '</div><div style="font-size:9pt;color:#4a5568">' + (inv.adresse||"") + '</div></div></div>'
+    + '<table style="margin-bottom:0"><thead><tr><th style="width:44%">DESIGNATION</th><th style="width:10%;text-align:center">QTE</th><th style="width:10%;text-align:center">TVA</th><th class="r" style="width:18%">PU HT</th><th class="r" style="width:18%">MONTANT HT</th></tr></thead><tbody>' + lines + '</tbody></table>'
+    + '<div style="border:1px solid #e2e8f0;border-top:none;margin-bottom:20px">'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid #e2e8f0"><span style="color:#4a5568">Montant Brut HT</span><span style="font-weight:700;color:#1a365d">' + fe(c.brut) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 14px 8px 28px;border-top:1px solid #e2e8f0;background:#fafbfc"><span style="color:#718096">(-) Remise ' + inv.remise + ' %</span><span style="font-weight:700;color:#c53030">- ' + fe(c.remise) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:10px 14px;border-top:2px solid #cbd5e0;background:#eff6ff"><span style="font-weight:700;color:#1a4f96">= Net Commercial HT</span><span style="font-weight:700;color:#1a4f96">' + fe(c.netCom) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 14px 8px 28px;border-top:1px solid #e2e8f0;background:#fafbfc"><span style="color:#718096">(-) Escompte ' + inv.escompte + ' %</span><span style="font-weight:700;color:#c53030">- ' + fe(c.esc) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:10px 14px;border-top:2px solid #cbd5e0;background:#eff6ff"><span style="font-weight:700;color:#1a4f96">= Net Financier HT</span><span style="font-weight:700;color:#1a4f96">' + fe(c.netFin) + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;padding:8px 14px;border-top:1px solid #e2e8f0"><span style="color:#4a5568">(+) Taxes annexes</span><span style="font-weight:700;color:#1a365d">' + fe(c.taxes) + '</span></div>'
+    + tvaRows
+    + '<div style="display:flex;justify-content:space-between;padding:8px 14px;border-top:2px solid #cbd5e0"><span style="font-weight:700">Total TVA</span><span style="font-weight:700;color:#276749">' + fe(c.tTVA) + '</span></div>'
+    + '<div class="fin" style="display:flex;justify-content:space-between"><span>NET A PAYER TTC</span><span>' + fe(c.net) + '</span></div>'
+    + '<div style="padding:12px 14px;background:#f8fafc;border:1px solid #e2e8f0;border-top:none;font-size:8pt;color:#718096;line-height:1.9">Conditions : 30 jours nets - Penalites : 3x taux legal - Indemnite : 40 EUR - Conforme Loi Anti-Fraude TVA 2018</div>'
+    + '</div><script>window.onload=function(){window.print();}<\/script></body></html>');
+  w.document.close();
+}
+
+function exportJournalPDF() {
+  var rows = "";
+  for (var i = 0; i < journalEntries.length; i++) {
+    var e = journalEntries[i];
+    rows += '<tr><td style="color:#718096;white-space:nowrap">' + e.d + '</td><td>' + e.lib + '</td>';
+    rows += '<td><span style="background:#ebf8ff;color:#2b6cb0;border:1px solid #bee3f8;border-radius:3px;padding:1px 5px;font-size:8pt;font-weight:700">' + e.r + '</span></td>';
+    rows += '<td style="text-align:right;font-weight:800;color:#1a365d;font-size:11pt">' + e.compte + '</td>';
+    rows += '<td style="text-align:right;font-weight:700;color:#1a4f96;font-family:monospace">' + (e.debit||"") + '</td>';
+    rows += '<td style="text-align:right;font-weight:700;color:#9c4221;font-family:monospace">' + (e.credit||"") + '</td></tr>';
+  }
+  var w = window.open("", "_blank");
+  w.document.write('<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Journal</title>'
+    + '<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;font-size:10pt;color:#1a202c;padding:26px 30px}'
+    + 'table{width:100%;border-collapse:collapse}thead th{background:#1a365d;color:#fff;padding:9px 11px;font-size:8.5pt;font-weight:700;text-align:left}'
+    + 'thead th.r{text-align:right}tbody tr:nth-child(even){background:#f8fafc}tbody td{padding:7px 11px;font-size:9.5pt;border-bottom:1px solid #e8ecf0}'
+    + '@media print{@page{margin:1.5cm}}</style></head><body>'
+    + '<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px;padding-bottom:12px;border-bottom:3px solid #1a365d">'
+    + '<div><h1 style="font-size:19pt;font-weight:900;color:#1a365d">Journal Comptable General</h1><div style="font-size:9pt;color:#718096;margin-top:3px">' + journalEntries.length + ' ecritures - ' + today() + '</div></div></div>'
+    + '<table><thead><tr><th style="width:90px">DATE</th><th>LIBELLE</th><th style="width:120px">N PIE</th><th class="r" style="width:80px">COMPTE</th><th class="r" style="width:130px">DEBIT</th><th class="r" style="width:130px">CREDIT</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table>'
+    + '<script>window.onload=function(){window.print();}<\/script></body></html>');
+  w.document.close();
+}
+
+// ===== PCG TAB =====
+function testPCG(v) {
+  var s = mapPCG(v);
+  var el = document.getElementById("pcg-result");
+  if (s) {
+    el.innerHTML = '<div style="padding:16px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.25);border-radius:9px">'
+      + '<div style="font-size:9px;color:var(--txt3);letter-spacing:2px;margin-bottom:7px;font-weight:700">COMPTE SUGGERE</div>'
+      + '<div style="font-size:28px;font-weight:800;color:var(--blue2);font-family:Plus Jakarta Sans,sans-serif">' + s.c + '</div>'
+      + '<div style="color:var(--txt2);margin-top:4px;font-size:13px">' + s.l + '</div></div>';
+  } else {
+    el.innerHTML = '<div style="padding:12px;color:var(--txt3);font-size:13px">Aucun compte trouve.</div>';
+  }
+}
+
+document.getElementById("pcg-input").addEventListener("input", function() { testPCG(this.value); });
+
+function buildPCGList() {
+  var html = "";
+  for (var i = 0; i < PCG.length; i++) {
+    var r = PCG[i];
+    html += '<div style="display:flex;align-items:flex-start;gap:14px;padding:11px 22px;border-bottom:1px solid var(--bord2)">'
+      + '<span class="bdg" style="flex-shrink:0">' + r.c + '</span>'
+      + '<div><div style="font-size:13px;color:var(--txt);font-weight:600">' + r.l + '</div>'
+      + '<div style="font-size:11px;color:var(--txt3);margin-top:2px">' + r.k.slice(0,4).join(", ") + '...</div></div></div>';
+  }
+  document.getElementById("pcg-list").innerHTML = html;
+  document.getElementById("pcg-count").textContent = "BASE PCG INTEGREE (" + PCG.length + " COMPTES)";
+}
+
+// ===== AI =====
+var AI_SYS = "Tu es ComptaAI, assistant universel omniscient. Domaines : PCG, TVA, droit, sciences, histoire, geographie, arts, business, actualite. Reponds toujours avec precision. Utilise le format markdown. Reponds en francais.";
+var chatHistory = [];
+
+async function sendMessage() {
+  var inp = document.getElementById("ai-input");
+  var box = document.getElementById("chat-box");
+  var btn = document.getElementById("send-btn");
+  var msg = inp.value.trim();
+  if (!msg || btn.disabled) return;
+  document.getElementById("chat-welcome").style.display = "none";
+  var divU = document.createElement("div");
+  divU.style.cssText = "display:flex;flex-direction:column;align-items:flex-end";
+  var msgU = document.createElement("div");
+  msgU.className = "msg-u";
+  msgU.textContent = msg;
+  divU.appendChild(msgU);
+  box.appendChild(divU);
+  inp.value = "";
+  btn.disabled = true;
+  btn.textContent = "...";
+  chatHistory.push({ role:"user", content:msg });
+  var tid = "t" + Date.now();
+  var divT = document.createElement("div");
+  divT.id = tid;
+  divT.style.cssText = "display:flex;flex-direction:column;align-items:flex-start";
+  divT.innerHTML = '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><div class="ai-ava">&#129302;</div><span style="font-size:11px;color:var(--txt3)">ComptaAI</span></div>'
+    + '<div style="display:flex;align-items:center;gap:5px;background:#0d1520;border:1px solid #1a3040;border-radius:5px 18px 18px 18px;padding:12px 18px">'
+    + '<div class="dot"></div><div class="dot"></div><div class="dot"></div>'
+    + '<span style="font-size:12px;color:var(--txt3);margin-left:6px" id="' + tid + '-s">Analyse...</span></div>';
+  box.appendChild(divT);
+  box.scrollTop = box.scrollHeight;
+  var sts = ["Analyse de votre question...", "Recherche en cours...", "Redaction de la reponse..."];
+  var si = 0;
+  var iv = setInterval(function() {
+    si = (si + 1) % sts.length;
+    var el = document.getElementById(tid + "-s");
+    if (el) el.textContent = sts[si];
+  }, 2000);
+  try {
+    var resp = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: chatHistory, system: AI_SYS })
+    });
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    var data = await resp.json();
+    var reply = data.text || "Aucune reponse.";
+    chatHistory.push({ role:"assistant", content:reply });
+    clearInterval(iv);
+    var tEl = document.getElementById(tid);
+    if (tEl) tEl.remove();
+    var divA = document.createElement("div");
+    divA.style.cssText = "display:flex;flex-direction:column;align-items:flex-start";
+    divA.innerHTML = '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><div class="ai-ava">&#129302;</div><span style="font-size:11px;color:var(--txt3)">ComptaAI</span></div>'
+      + '<div class="msg-a">' + mdHtml(reply) + '</div>';
+    box.appendChild(divA);
+  } catch(err) {
+    clearInterval(iv);
+    var tEl = document.getElementById(tid);
+    if (tEl) tEl.remove();
+    var divErr = document.createElement("div");
+    divErr.style.cssText = "display:flex;flex-direction:column;align-items:flex-start";
+    divErr.innerHTML = '<div class="msg-a" style="background:#1a0d0d;border-color:#5a1e1e;color:#f87171">Erreur de connexion. Verifiez que la cle API OpenAI est configuree dans Vercel (Settings > Environment Variables > OPENAI_API_KEY).</div>';
+    box.appendChild(divErr);
+  }
+  btn.disabled = false;
+  btn.textContent = "\u2191 Envoyer";
+  box.scrollTop = box.scrollHeight;
+}
+
+document.getElementById("send-btn").addEventListener("click", sendMessage);
+document.getElementById("ai-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+document.getElementById("btn-clear-chat").addEventListener("click", function() {
+  chatHistory = [];
+  document.getElementById("chat-box").innerHTML = "";
+});
+
+function mdHtml(t) {
+  var h = t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  h = h.replace(/```[\w]*\n([\s\S]*?)```/g, function(m, code) {
+    return '<pre><code>' + code.trim() + '</code></pre>';
+  });
+  h = h.replace(/^### (.+)$/gm, '<h4>$1</h4>');
+  h = h.replace(/^## (.+)$/gm, '<h3>$1</h3>');
+  h = h.replace(/^# (.+)$/gm, '<h2>$1</h2>');
+  h = h.replace(/^---+$/gm, '<hr>');
+  h = h.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  h = h.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  h = h.replace(/`([^`]+)`/g, '<code>$1</code>');
+  h = h.replace(/^[\-\*] (.+)$/gm, '<li>$1</li>');
+  h = h.replace(/(<li>[\s\S]*?<\/li>)+/g, '<ul>$&</ul>');
+  h = h.replace(/\n\n/g, '</p><p>');
+  h = h.replace(/\n/g, '<br>');
+  return h;
+}
+
+// ===== INIT =====
+function init() {
+  document.getElementById("b-date").textContent = today();
+  document.getElementById("ref-num").textContent = gn("Vente");
+  addLine();
+  buildPCGList();
+  var examples = [
+    ["Difference 6064 vs 6063", "&#128202;"],
+    ["Regles TVA intracommunautaire", "&#9878;&#65039;"],
+    ["Comment fonctionne l IA", "&#128161;"],
+    ["Theorie de la relativite", "&#128640;"],
+    ["Difference SAS vs SARL", "&#128188;"],
+    ["Dernières news economiques", "&#128240;"]
+  ];
+  var exDiv = document.getElementById("example-btns");
+  for (var i = 0; i < examples.length; i++) {
+    (function(q, ic) {
+      var btn = document.createElement("button");
+      btn.style.cssText = "background:var(--bg3);border:1px solid var(--bord);border-radius:9px;padding:10px 14px;text-align:left;cursor:pointer;font-family:Inter,sans-serif;display:flex;gap:8px;align-items:center;color:var(--txt2);font-size:12px";
+      btn.innerHTML = ic + " " + q;
+      btn.addEventListener("click", function() { document.getElementById("ai-input").value = q; });
+      btn.addEventListener("mouseover", function() { this.style.borderColor = "var(--blue)"; });
+      btn.addEventListener("mouseout", function() { this.style.borderColor = "var(--bord)"; });
+      exDiv.appendChild(btn);
+    })(examples[i][0], examples[i][1]);
+  }
+  var domains = ["Comptabilite & PCG","Droit & Fiscalite","Sciences & Maths","Histoire & Geo","Business","Arts & Culture","Tech & IA","Medecine","Actualite Web"];
+  var icons = ["&#128202;","&#9878;&#65039;","&#128161;","&#127758;","&#128188;","&#127912;","&#128187;","&#127973;","&#128240;"];
+  var dDiv = document.getElementById("domain-list");
+  for (var i = 0; i < domains.length; i++) {
+    var d = document.createElement("div");
+    d.style.cssText = "display:flex;align-items:center;gap:10px;padding:9px 18px;border-bottom:1px solid var(--bord2);font-size:13px;color:var(--txt2)";
+    d.innerHTML = '<span>' + icons[i] + '</span><span>' + domains[i] + '</span>';
+    dDiv.appendChild(d);
+  }
+  var quick = [
+    ["Comptabilite","Compte pour un ordinateur"],
+    ["Fiscalite","TVA sur les aliments"],
+    ["Droit","Difference SAS vs SARL"],
+    ["Sciences","Energie nucleaire expliquee"],
+    ["Histoire","Causes de la 2nde guerre mondiale"],
+    ["Actualite","Dernieres news economiques"]
+  ];
+  var qDiv = document.getElementById("quick-list");
+  for (var i = 0; i < quick.length; i++) {
+    (function(cat, q) {
+      var btn = document.createElement("button");
+      btn.className = "qbtn";
+      btn.innerHTML = '<div class="qc">' + cat.toUpperCase() + '</div><div class="qt">' + q + '</div>';
+      btn.addEventListener("click", function() { document.getElementById("ai-input").value = q; });
+      qDiv.appendChild(btn);
+    })(quick[i][0], quick[i][1]);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
